@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">egt</string>
+    <string name="action_settings">Settings</string>
+    <string name="message_start">EGTM Calculator</string>
+    <string name="ESN">ESN</string>
+    <string name="ESN_detail">000000</string>
+    <string name="ESN_detail_text">%s</string>
+    <string name="thrust">Thrust(k)</string>
+    <string name="thrust_result">%d</string>
+    <string name="EGTM">EGTM</string>
+    <string name="EGTM_result">%d</string>
+    <string name="Update">UPDATE</string>
+    <string name="reset_button">RESET</string>
+    <string name="WEGTM">EGTM(Worst Case)</string>
+    <string name="WEGTM_result">%d</string>
+
+</resources>
