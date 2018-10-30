@@ -9,6 +9,8 @@ public class esn_data {
     private String mConfiguration;
     private int mTSN;
     private int mCSN;
+    private int mTSV;
+    private int mCSV;
     private int mEGTM;
     private GregorianCalendar mRecordDate;
 
@@ -19,22 +21,26 @@ public class esn_data {
         mConfiguration = "_____________";;
         mTSN =0;;
         mCSN = 0;
+        mTSV = 0;
+        mCSV = 0;
         mEGTM = 0;
         mRecordDate = new GregorianCalendar();
     }
 
-    public esn_data(String esn, String type, String config, int tsn, int csn, int egtm, GregorianCalendar recordDate){
+    public esn_data(String esn, String type, String config, int tsn, int csn,int tsv, int csv, int egtm, GregorianCalendar recordDate){
     mESN = esn;
     mType = type;
     mConfiguration = config;
     mTSN = tsn;
     mCSN = csn;
+    mTSN = tsv;
+    mCSN = csv;
     mEGTM = egtm;
     mRecordDate =recordDate;
 }
 
     public static esn_data getDefaultItem() {
-        return new esn_data("ESN", "CFM56", "5B", 0, 0, 999, new GregorianCalendar());
+        return new esn_data("ESN", "CFM56", "5B", 0, 0,0, 0, 999, new GregorianCalendar());
     }
 
     public String getmESN() {
@@ -75,6 +81,22 @@ public class esn_data {
 
     public void setmCSN(int mCSN) {
         this.mCSN = mCSN;
+    }
+
+    public int getmTSV() {
+        return mTSV;
+    }
+
+    public void setmTSV(int mTSV) {
+        this.mTSV = mTSV;
+    }
+
+    public int getmCSV() {
+        return mCSV;
+    }
+
+    public void setmCSV(int mCSV) {
+        this.mCSV = mCSV;
     }
 
     public int getmEGTM() {
