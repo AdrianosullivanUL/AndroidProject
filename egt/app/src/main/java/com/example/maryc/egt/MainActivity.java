@@ -1,13 +1,18 @@
 package com.example.maryc.egt;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,10 +27,50 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                addResult();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
             }
         });
+    }
+
+    private void addResult() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add Engine Record");
+
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_add, null, false);
+        builder.setView(view);
+
+        final EditText esn_edittext = view.findViewById(R.id.esn_edittext);
+        final Spinner engine_model_spinner = view.findViewById(R.id.engine_model_spinner);
+        final Spinner engine_designation_spinner = view.findViewById(R.id.engine_designation_spinner);
+        final EditText current_egt_edittext = view.findViewById(R.id.current_egt_edittext);
+        final EditText time_since_last_sv_edittext = view.findViewById(R.id.time_since_last_sv_edittext);
+        final EditText time_since_new_edittext = view.findViewById(R.id.time_since_new_edittext);
+        final EditText cycles_since_new_edittext = view.findViewById(R.id.cycles_since_new_edittext);
+
+
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String mESN = esn_edittext.getText().toString();
+                String mEngineModel = engine_model_spinner.getSelectedItem().toString();
+                String mEngineDesignation = engine_designation_spinner.getSelectedItem().toString();
+
+                int mCurrentEGT_edittext = Integer.parseInt(current_egt_edittext.getText().toString());
+                int mTimeSinceLastSV = Integer.parseInt(time_since_last_sv_edittext.getText().toString());
+                int mTimeSinceNew = Integer.parseInt(time_since_new_edittext.getText().toString());
+                int mCyclesSinceNew = Integer.parseInt(cycles_since_new_edittext.getText().toString());
+
+
+                // todo add method
+
+            }
+        });
+
+        builder.create().show();
     }
 
     @Override

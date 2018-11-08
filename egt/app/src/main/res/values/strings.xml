@@ -13,5 +13,15 @@
     <string name="reset_button">RESET</string>
     <string name="WEGTM">EGTM(Worst Case)</string>
     <string name="WEGTM_result">%d</string>
+    <string name="EngineModel">Engine Model</string>
+    <string name="EngineDesignation">Engine Designation</string>
+    <string name="CurrentEGT">Current EGT</string>
+    <string name="TimeSinceLastSV">Time Since Last Shop Visit</string>
+    <string name="TimeSinceNew">Time Since New</string>
+    <string name="CyclesSinceNew">Cycles Since New</string>
+    <string name="Submit">Submit</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Hours">Hours</string>
+
 
 </resources>
