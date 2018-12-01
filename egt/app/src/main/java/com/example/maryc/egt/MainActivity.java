@@ -10,18 +10,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
 
+public class MainActivity extends AppCompatActivity {
+    DBHelper mDBHelper;
+    List<EngineModel> mEngineModels;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        mDBHelper = new DBHelper();
+        mDBHelper.populateEngineModels();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
         final EditText time_since_last_sv_edittext = view.findViewById(R.id.time_since_last_sv_edittext);
         final EditText time_since_new_edittext = view.findViewById(R.id.time_since_new_edittext);
         final EditText cycles_since_new_edittext = view.findViewById(R.id.cycles_since_new_edittext);
+
+
+        // Add Engine Models to the Array List
+        List<String> mEngineModels = mDBHelper.getEngineModels();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, mEngineModels);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        engine_model_spinner.setAdapter(adapter);
 
 
         builder.setNegativeButton(android.R.string.cancel, null);

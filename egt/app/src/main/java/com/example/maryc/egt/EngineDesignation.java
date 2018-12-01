@@ -5,7 +5,7 @@ public class EngineDesignation {
     private String mEngineModel;
     private String mConfiguration;
     private float mThrustInK;
-    private float mRedLineTemprature;
+    private float mRedLineTemperature;
     private int mCyclesPerDegree;
 
     public void setId(String id) {
@@ -40,12 +40,12 @@ public class EngineDesignation {
         return mThrustInK;
     }
 
-    public void setRedLineTemprature(float RedLineTemprature) {
-        mRedLineTemprature = RedLineTemprature;
+    public void setRedLineTemperature(float RedLineTemperature) {
+        mRedLineTemperature = RedLineTemperature;
     }
 
-    public float getRedLineTemprature() {
-        return mRedLineTemprature;
+    public float getRedLineTemperature() {
+        return mRedLineTemperature;
     }
 
     public void setCyclesPerDegree(int CyclesPerDegree) {
