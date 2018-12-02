@@ -10,12 +10,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.List;
+
+import static android.app.PendingIntent.getActivity;
 
 public class MainActivity extends AppCompatActivity {
     DBHelper mDBHelper;
@@ -59,12 +62,38 @@ public class MainActivity extends AppCompatActivity {
         final EditText cycles_since_new_edittext = view.findViewById(R.id.cycles_since_new_edittext);
 
 
+
+
         // Add Engine Models to the Array List
-        List<String> mEngineModels = mDBHelper.getEngineModels();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        final List<String> mEngineModels = mDBHelper.getEngineModels();
+        ArrayAdapter<String> engineModelAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, mEngineModels);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        engine_model_spinner.setAdapter(adapter);
+        engineModelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        engine_model_spinner.setAdapter(engineModelAdapter);
+
+
+
+        engine_model_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // your code here
+                final List<String> mEngineConfigurations = mDBHelper.getEngineConfigurationsForEngineModel(null);
+                ArrayAdapter<String> EngineDesignationAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mEngineConfigurations);
+                EngineDesignationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                engine_designation_spinner.setAdapter(EngineDesignationAdapter);
+
+
+
+
+                engine_model_spinner.setAdapter(mEngineDesignationAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
 
 
         builder.setNegativeButton(android.R.string.cancel, null);
@@ -84,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 // todo add method
 
             }
+
         });
 
         builder.create().show();
@@ -110,4 +140,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

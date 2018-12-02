@@ -8,6 +8,14 @@ public class EngineDesignation {
     private float mRedLineTemperature;
     private int mCyclesPerDegree;
 
+    public EngineDesignation(String engineModel, String engineDesignation,int thrushInK, int redLineTemperature, int cyclesPerDegree) {
+        mEngineModel = engineModel;
+        mConfiguration = engineDesignation;
+        mThrustInK = thrushInK;
+        mRedLineTemperature = redLineTemperature;
+        mCyclesPerDegree = cyclesPerDegree;
+    }
+
     public void setId(String id) {
         mId = id;
     }
