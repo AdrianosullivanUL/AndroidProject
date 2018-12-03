@@ -15,6 +15,12 @@ public class Constants {
     public static final String KEY_TIME_SINCE_NEW = "time_since_new";
     public static final String KEY_CYCLES_SINCE_NEW = "cycles_since_new";
     public static final String KEY_CREATED = "created";
+    public static final String KEY_RECORD_DATE = "record_date";
+    public static final String KEY_OPERATOR = "operator";
+    public static final String KEY_EXAUST_GAS_TEMPERATURE = "exaust_gas_temperature";
+    public static final String KEY_HOURS_SINCE_LAST_SHOP_VISIT = "hours_since_last_shop_visit";
+    public static final String KEY_HOURS_SINCE_NEW = "hours_since_new";
+    public static final String KEY_ESTIMATED_TIME_TO_SHOP_VISIT = "estimated_time_to_shop_visit";
 
 
 }

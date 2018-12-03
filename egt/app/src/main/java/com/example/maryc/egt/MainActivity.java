@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.Date;
 import java.util.List;
 
 import static android.app.PendingIntent.getActivity;
@@ -23,6 +24,7 @@ import static android.app.PendingIntent.getActivity;
 public class MainActivity extends AppCompatActivity {
     DBHelper mDBHelper;
     List<EngineModel> mEngineModels;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDBHelper = new DBHelper();
         mDBHelper.populateEngineModels();
+        mDBHelper.populateEngineDesignations();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
         final EditText cycles_since_new_edittext = view.findViewById(R.id.cycles_since_new_edittext);
 
 
-
-
         // Add Engine Models to the Array List
         final List<String> mEngineModels = mDBHelper.getEngineModels();
         ArrayAdapter<String> engineModelAdapter = new ArrayAdapter<String>(this,
@@ -71,21 +72,18 @@ public class MainActivity extends AppCompatActivity {
         engineModelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         engine_model_spinner.setAdapter(engineModelAdapter);
 
+        ArrayAdapter<String> EngineDesignationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mEngineModels);
+        EngineDesignationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
         engine_model_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // your code here
-                final List<String> mEngineConfigurations = mDBHelper.getEngineConfigurationsForEngineModel(null);
-                ArrayAdapter<String> EngineDesignationAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mEngineConfigurations);
+                List<String> mEngineConfigurations = mDBHelper.getEngineConfigurationsForEngineModel(engine_model_spinner.getSelectedItem().toString());
+                ArrayAdapter<String> EngineDesignationAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, mEngineConfigurations);
                 EngineDesignationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 engine_designation_spinner.setAdapter(EngineDesignationAdapter);
-
-
-
-
-                engine_model_spinner.setAdapter(mEngineDesignationAdapter);
             }
 
             @Override
@@ -100,14 +98,32 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+
                 String mESN = esn_edittext.getText().toString();
                 String mEngineModel = engine_model_spinner.getSelectedItem().toString();
                 String mEngineDesignation = engine_designation_spinner.getSelectedItem().toString();
+                EngineDesignation engineDesignation = mDBHelper.getEngineDesignation(mEngineModel, mEngineDesignation);
 
-                int mCurrentEGT_edittext = Integer.parseInt(current_egt_edittext.getText().toString());
+                int mCurrentEGT = Integer.parseInt(current_egt_edittext.getText().toString());
                 int mTimeSinceLastSV = Integer.parseInt(time_since_last_sv_edittext.getText().toString());
                 int mTimeSinceNew = Integer.parseInt(time_since_new_edittext.getText().toString());
                 int mCyclesSinceNew = Integer.parseInt(cycles_since_new_edittext.getText().toString());
+                Date mRecordDate = new Date();
+                String mOperator = ""; //operator_edittext.getText().toString();
+                EngineRecord mEngineRecord;
+                mEngineRecord = new EngineRecord();
+
+                mEngineRecord = new EngineRecord(mESN,
+                        mRecordDate,
+                        mEngineModel,
+                        mOperator,
+                        engineDesignation.getConfiguration(),
+                        engineDesignation.getThrustInK(),
+                        mCurrentEGT,
+                        mTimeSinceLastSV,
+                        mTimeSinceNew,
+                        mCyclesSinceNew, 0);
 
 
                 // todo add method

@@ -4,8 +4,8 @@ public class EngineDesignation {
     private String mId;
     private String mEngineModel;
     private String mConfiguration;
-    private float mThrustInK;
-    private float mRedLineTemperature;
+    private int mThrustInK;
+    private int mRedLineTemperature;
     private int mCyclesPerDegree;
 
     public EngineDesignation(String engineModel, String engineDesignation,int thrushInK, int redLineTemperature, int cyclesPerDegree) {
@@ -40,19 +40,19 @@ public class EngineDesignation {
         return mConfiguration;
     }
 
-    public void setThrustInK(float ThrustInK) {
+    public void setThrustInK(int ThrustInK) {
         mThrustInK = ThrustInK;
     }
 
-    public float getThrustInK() {
+    public int getThrustInK() {
         return mThrustInK;
     }
 
-    public void setRedLineTemperature(float RedLineTemperature) {
+    public void setRedLineTemperature(int RedLineTemperature) {
         mRedLineTemperature = RedLineTemperature;
     }
 
-    public float getRedLineTemperature() {
+    public int getRedLineTemperature() {
         return mRedLineTemperature;
     }
 
