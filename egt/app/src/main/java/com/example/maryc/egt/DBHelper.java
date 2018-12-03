@@ -121,11 +121,10 @@ public class DBHelper {
         mEngineRecord.put(Constants.KEY_ENGINE_DESIGNATION, engineRecord.getEngineDesignation());
         mEngineRecord.put(Constants.KEY_THRUST_IN_K, engineRecord.getThrustInK());
         mEngineRecord.put(Constants.KEY_CURRENT_EGT, engineRecord.getCurrentEGT());
-        mEngineRecord.put(Constants.KEY_CURRENT_EGT, engineRecord.getCurrentEGT());
         mEngineRecord.put(Constants.KEY_HOURS_SINCE_LAST_SHOP_VISIT, engineRecord.getHoursSinceLastShopVisit());
         mEngineRecord.put(Constants.KEY_HOURS_SINCE_NEW, engineRecord.getHoursSinceNew());
         mEngineRecord.put(Constants.KEY_CYCLES_SINCE_NEW, engineRecord.getCyclesSinceNew());
-        mEngineRecord.put(Constants.KEY_ESTIMATED_TIME_TO_SHOP_VISIT, engineRecord.getEstimatedTimeToShopVisit());
+       // mEngineRecord.put(Constants.KEY_ESTIMATED_TIME_TO_SHOP_VISIT, engineRecord.getEstimatedTimeToShopVisit());
 
 
 // Add a new document with a generated ID

@@ -6,14 +6,15 @@ public class EngineDesignation {
     private String mConfiguration;
     private int mThrustInK;
     private int mRedLineTemperature;
-    private int mCyclesPerDegree;
+    private int mDegreesPerCyclesThousandCycles;
 
-    public EngineDesignation(String engineModel, String engineDesignation,int thrushInK, int redLineTemperature, int cyclesPerDegree) {
+    public EngineDesignation(String engineModel, String engineDesignation,int thrushInK,
+                             int redLineTemperature, int degreesPerCyclesThousandCycles) {
         mEngineModel = engineModel;
         mConfiguration = engineDesignation;
         mThrustInK = thrushInK;
         mRedLineTemperature = redLineTemperature;
-        mCyclesPerDegree = cyclesPerDegree;
+        mDegreesPerCyclesThousandCycles = degreesPerCyclesThousandCycles;
     }
 
     public void setId(String id) {
@@ -56,12 +57,12 @@ public class EngineDesignation {
         return mRedLineTemperature;
     }
 
-    public void setCyclesPerDegree(int CyclesPerDegree) {
-        mCyclesPerDegree = CyclesPerDegree;
+    public void setDegreesPerCyclesThousandCycles(int DegreesPerCyclesThousandCycles) {
+        mDegreesPerCyclesThousandCycles = DegreesPerCyclesThousandCycles;
     }
 
-    public int getCyclesPerDegree() {
-        return mCyclesPerDegree;
+    public int getDegreesPerCyclesThousandCycles() {
+        return mDegreesPerCyclesThousandCycles;
     }
 
 }

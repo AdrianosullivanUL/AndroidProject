@@ -49,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addResult();
+                addNewEngineRecord();
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //        .setAction("Action", null).show();
             }
         });
     }
 
-    private void addResult() {
+    private void addNewEngineRecord() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add Engine Record");
         View view = getLayoutInflater().inflate(R.layout.dialog_add, null, false);
@@ -230,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
 
                     mDBHelper.addEngineRecord( mEngineRecord);
                     alertDialog.dismiss();
+                    // MC TODO Launch result dialog from here
                 }
 
 

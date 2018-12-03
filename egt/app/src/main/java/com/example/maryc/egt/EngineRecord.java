@@ -14,7 +14,6 @@ public class EngineRecord {
     private int mHoursSinceLastShopVisit;
     private int mHoursSinceNew;
     private int mCyclesSinceNew;
-    private int mEstimatedTimeToShopVisit;
 
     public EngineRecord() {
 
@@ -129,13 +128,7 @@ public class EngineRecord {
         return mCyclesSinceNew;
     }
 
-    public void setEstimatedTimeToShopVisit(int EstimatedTimeToShopVisit) {
-        mEstimatedTimeToShopVisit = EstimatedTimeToShopVisit;
-    }
 
-    public float getEstimatedTimeToShopVisit() {
-        return mEstimatedTimeToShopVisit;
-    }
 
 
 }
