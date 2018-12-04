@@ -21,6 +21,8 @@ public class Constants {
     public static final String KEY_HOURS_SINCE_LAST_SHOP_VISIT = "hours_since_last_shop_visit";
     public static final String KEY_HOURS_SINCE_NEW = "hours_since_new";
     public static final String KEY_ESTIMATED_TIME_TO_SHOP_VISIT = "estimated_time_to_shop_visit";
+    public static final String EXTRA_DOCUMENT_ID = "document_id";
+    public static final String COLLECTION_ENGINE_RECORD = "engine_record";
 
 
 }
