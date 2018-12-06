@@ -143,4 +143,15 @@ public class DBHelper {
                     }
                 });
     }
+    public List<EGTResult> generateResults(String EngineRecordId)
+    {
+        List<EGTResult> myEGTResult = new ArrayList<>();
+        myEGTResult.add(new EGTResult(22000,70,3500,2022));
+        myEGTResult.add(new EGTResult(24000,65,3000,2021));
+        myEGTResult.add(new EGTResult(26000,60,2800,2020));
+
+        return myEGTResult;
+
+    }
+
 }
