@@ -90,9 +90,8 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete:
-                // TODO delete EGT Entry and close activity
-                //mDocRef.delete();
-                //finish();
+                mDocRef.delete();
+                finish();
                 return true;
         }
 
@@ -100,10 +99,6 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
     }
 
     public void populateTable(String engineRecordId) {
-
-
-        // TODO: Populate EngineRecordId
-
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
