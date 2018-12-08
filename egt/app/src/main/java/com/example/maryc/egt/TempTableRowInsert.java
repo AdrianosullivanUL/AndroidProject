@@ -12,6 +12,7 @@ import java.util.List;
 public class TempTableRowInsert {
 
     public void doWork() {
+        /*
         String engineRecordId = "";
         // TODO: Populate EngineRecordId
 
@@ -56,7 +57,8 @@ public class TempTableRowInsert {
             tableRow.addView(textShopVisitYear);
 
             tableLayout.addView(tableRow);
-        }
 
+        }
+*/
     }
 }
