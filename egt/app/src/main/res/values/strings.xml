@@ -6,13 +6,13 @@
     <string name="ESN_detail_text">%s</string>
     <string name="thrust">Thrust(k)</string>
     <string name="ESN">ESN</string>
-    <string name="thrust_result">%d</string>
+    <string name="thrust_result"></string>
     <string name="EGTM">EGTM</string>
-    <string name="EGTM_result">%d</string>
+    <string name="EGTM_result"></string>
     <string name="Update">UPDATE</string>
     <string name="reset_button">RESET</string>
     <string name="WEGTM">EGTM(Worst Case)</string>
-    <string name="WEGTM_result">%d</string>
+    <string name="WEGTM_result"></string>
     <string name="EngineModel">Engine Model</string>
     <string name="EngineDesignation">Engine Designation</string>
     <string name="CurrentEGT">Current EGT</string>
@@ -25,8 +25,8 @@
     <string name="title_activity_egtmargin_detail">EGTMarginDetailActivity</string>
     <string name="action_delete">delete</string>
     <string name="submit">Submit</string>
-    <string name="shopvist_Year_result">%d</string>
-    <string name="Cycles_remaining_result">%d</string>
+    <string name="shopvist_Year_result"></string>
+    <string name="Cycles_remaining_result"></string>
 
 
 </resources>
