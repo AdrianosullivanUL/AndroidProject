@@ -5,6 +5,7 @@
     <string name="ESN_detail">000000</string>
     <string name="ESN_detail_text">%s</string>
     <string name="thrust">Thrust(k)</string>
+    <string name="ESN">ESN</string>
     <string name="thrust_result">%d</string>
     <string name="EGTM">EGTM</string>
     <string name="EGTM_result">%d</string>

@@ -1,5 +1,7 @@
 package com.example.maryc.egt;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -79,11 +81,20 @@ public class EngineRecordAdapator extends RecyclerView.Adapter<EngineRecordAdapa
         private TextView mModelDesigTextView;
         private TextView mDate;
 
-        public EngineRecordViewHolder(@NonNull View itemView) {
+
+        public EngineRecordViewHolder(@NonNull final View itemView) {
             super(itemView);
             mESNTextView = itemView.findViewById(R.id.itemview_ESN);
             mModelDesigTextView = itemView.findViewById(R.id.itemview_engine_model_and_desig);
             mDate = itemView.findViewById(R.id.itemview_date);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context c = v.getContext();
+                    Intent intent = new Intent(c,EGTMarginDetailActivity.class);
+                    c.startActivity(intent);
+                }
+            });
 
         }
     }
