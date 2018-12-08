@@ -29,6 +29,7 @@ public class DBHelper {
     private final FirebaseFirestore db;
     private final List<String> mEngineModels = new ArrayList<String>();
     private final List<EngineDesignation> mEngineDesignations = new ArrayList<EngineDesignation>();
+    private final List<Engine> mEngines = new ArrayList<Engine>();
 
     public DBHelper() {
         db = FirebaseFirestore.getInstance();
@@ -56,6 +57,30 @@ public class DBHelper {
                     }
                 });
     }
+
+    public void populateEngines() {
+        int i = 0;
+        db.collection("engine")
+                // .whereEqualTo("capital", true)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(Constants.TAG, document.getId() + " => " + document.getData());
+                                Engine engine = new Engine();
+                                engine.setESN(document.get(Constants.KEY_ESN).toString());
+                                engine.setEngineModel(document.get(Constants.KEY_ENGINE_MODEL).toString());
+                                mEngines.add(engine);
+                            }
+                        } else {
+                            Log.d(Constants.TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
 
     public void populateEngineDesignations() {
         int i = 0;
@@ -85,6 +110,14 @@ public class DBHelper {
 
     public List<String> getEngineModels() {
         return mEngineModels;
+    }
+    public List<String> getESNs() {
+        List<String> esns = new ArrayList<>();
+        for (Engine engine : mEngines)
+        {
+            esns.add(engine.getESN());
+        }
+        return esns;
     }
 
     public List<String> getEngineConfigurationsForEngineModel(String engineModel) {

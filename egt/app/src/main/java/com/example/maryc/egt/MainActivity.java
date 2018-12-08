@@ -42,10 +42,19 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         mDBHelper = new DBHelper();
+        mDBHelper.populateEngines();
         mDBHelper.populateEngineModels();
         mDBHelper.populateEngineDesignations();
+
+        // Add Engine Models to the Array List
+        final List<String> mESNs = mDBHelper.getESNs();
+        final Spinner esn_spinner = findViewById(R.id.ESN_spinner);
+        ArrayAdapter<String> esnAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, mESNs);
+        esnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        esn_spinner.setAdapter(esnAdapter);
+
 
         RecyclerView recycleView = findViewById(R.id.recycler_view);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
