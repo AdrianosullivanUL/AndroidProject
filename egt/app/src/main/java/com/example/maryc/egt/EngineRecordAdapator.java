@@ -29,10 +29,11 @@ import java.util.List;
 public class EngineRecordAdapator extends RecyclerView.Adapter<EngineRecordAdapator.EngineRecordViewHolder> {
     private List<DocumentSnapshot> mEngineRecords = new ArrayList<>();
 
-    public EngineRecordAdapator()
+    public EngineRecordAdapator(String ESN)
     {
         CollectionReference engineRecordCollectionRef = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_ENGINE_RECORD);
         engineRecordCollectionRef
+                .whereEqualTo("ESN", ESN)
                 .orderBy(Constants.KEY_RECORD_DATE
                         ,Query.Direction.DESCENDING)
                 .limit(50)

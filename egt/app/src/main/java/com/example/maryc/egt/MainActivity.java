@@ -49,6 +49,17 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         esn_spinner = findViewById(R.id.ESN_spinner);
+        Button submitButton = findViewById(R.id.submit_button);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RecyclerView recycleView = findViewById(R.id.recycler_view);
+                recycleView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                recycleView.setHasFixedSize(true);
+                EngineRecordAdapator engineRecordAdapator = new EngineRecordAdapator(esn_spinner.getSelectedItem().toString());
+                recycleView.setAdapter(engineRecordAdapator);
+            }
+        });
 
         db = FirebaseFirestore.getInstance();
         mDBHelper = new DBHelper(this, db);
@@ -58,13 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Add Engine Models to the Array List
 
-
-
-        RecyclerView recycleView = findViewById(R.id.recycler_view);
-        recycleView.setLayoutManager(new LinearLayoutManager(this));
-        recycleView.setHasFixedSize(true);
-        EngineRecordAdapator engineRecordAdapator = new EngineRecordAdapator();
-        recycleView.setAdapter(engineRecordAdapator);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
