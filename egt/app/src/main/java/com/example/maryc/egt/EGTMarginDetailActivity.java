@@ -68,21 +68,21 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+       // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+       // fab.setOnClickListener(new View.OnClickListener() {
+          //  @Override
+           // public void onClick(View view) {
+            //    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+              //          .setAction("Action", null).show();
+          //  }
+       // });
+    //}
+    //@Override
+   // public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_egt_detail, menu);
-        return true;
+       // getMenuInflater().inflate(R.menu.menu_egt_detail, menu);
+       // return true;
     }
 
     @Override
@@ -105,7 +105,8 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
 
         final TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayout_EGT_detail);
 
-        DBHelper dbHelper = new DBHelper();
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        DBHelper dbHelper = new DBHelper(this,db);
 
         EngineRecord engineRecord = dbHelper.getEngineRecord(engineRecordId);
 
