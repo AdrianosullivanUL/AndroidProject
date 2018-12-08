@@ -196,7 +196,16 @@ public class MainActivity extends AppCompatActivity {
                     current_egt_edittext.setError("Current EGT must be a positive number");
                     errorFound = true;
                 }
-
+                if (mCurrentEGT <= 600 && mCurrentEGTError == false) {
+                    current_egt_edittext.requestFocus();
+                    current_egt_edittext.setError("Current EGT must be > 600deg celcius");
+                    errorFound = true;
+                }
+                if (mCurrentEGT > 1000 && mCurrentEGTError == false) {
+                    current_egt_edittext.requestFocus();
+                    current_egt_edittext.setError("Current EGT must be < 1000deg celcius");
+                    errorFound = true;
+                }
                 // Process Time Since Last SV
                 int mTimeSinceLastSV = 0;
                 boolean mTimeSinceLastSVError = false;

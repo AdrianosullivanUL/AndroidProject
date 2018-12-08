@@ -67,6 +67,7 @@ public class DBHelper {
 
     public void populateEngines() {
         int i = 0;
+        mEngines.clear();
         db.collection("engine")
                 // .whereEqualTo("capital", true)
                 .get()
@@ -167,7 +168,7 @@ public class DBHelper {
         mEngineRecord.put(Constants.KEY_HOURS_SINCE_NEW, engineRecord.getHoursSinceNew());
         mEngineRecord.put(Constants.KEY_CYCLES_SINCE_NEW, engineRecord.getCyclesSinceNew());
        // mEngineRecord.put(Constants.KEY_ESTIMATED_TIME_TO_SHOP_VISIT, engineRecord.getEstimatedTimeToShopVisit());
-
+        addEngineIfNotExists(engineRecord.getESN(), engineRecord.getEngineModel());
 
 // Add a new document with a generated ID
         db.collection("engine_record")
@@ -202,6 +203,50 @@ public class DBHelper {
         //engineRecord.setRecordDate(New GregorianCalendar.);
         engineRecord.setCurrentEGT(796);
         return engineRecord;
+    }
+    private void addEngineIfNotExists(final String ESN, final String EngineModel)
+    {
+        db.collection("engine")
+                 .whereEqualTo("ESN", ESN)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        boolean found = false;
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                              found = true;
+                            }
+                            if (found == false)
+                            {
+                                // Add this ESN to the list of engines
+                                Map<String, Object> mEngine = new HashMap<>();
+                                mEngine.put(Constants.KEY_ESN,ESN);
+                                mEngine.put(Constants.KEY_ENGINE_MODEL, EngineModel);
+
+                                // Add a new document with a generated ID
+                                db.collection("engine")
+                                        .add(mEngine)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Log.d(Constants.TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                                // Refresh the Engine spinner on the front page
+                                                populateEngines();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(Constants.TAG, "Error adding document", e);
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.d(Constants.TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
 }
