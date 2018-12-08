@@ -1,11 +1,358 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".EGTMarginDetailActivity"
+    android:padding="5dp"
     tools:showIn="@layout/activity_egtmargin_detail">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/ESN_detail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:gravity="left"
+        android:textSize="10pt"
+        android:text="ESN"
+        />
+    <TextView
+        android:id="@+id/ESN_detail_textview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:textSize="10pt"
+        android:gravity="right"
+        android:text="ESN"/>
+
+    <TextView
+        android:id="@+id/Type_detail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:gravity="left"
+        android:textSize="10pt"
+        android:text="ESN TYPE"        />
+    <TextView
+        android:id="@+id/Type_detail_textview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:textSize="10pt"
+        android:gravity="right"
+        android:text="type">
+    </TextView>
+    <TextView
+        android:id="@+id/Current_egt_detail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:gravity="left"
+        android:textSize="10pt"
+        android:text="CURRENT EGT"
+        />
+    <TextView
+        android:id="@+id/currentEGT_detail_textview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:textSize="10pt"
+        android:gravity="right"
+        android:text="egt detail"/>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_marginTop="110dp"
+        android:padding="5dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:background="@color/header"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                android:text="@string/thrust"/>
+
+            <TextView
+                android:id="@+id/egtTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:text="@string/EGTM"/>
+            />
+            <TextView
+                android:id="@+id/remainingCyclesView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:text="CYC REMAINING"/>
+            <TextView
+                android:id="@+id/SV_Year_View"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:text="SV YEAR"/>
+            />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Result_1"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/Thrust_1"
+                android:text="@string/thrust_result"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                />
+
+            <TextView
+                android:id="@+id/EGT_1"
+                android:text="@string/EGTM_result"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                />
+            <TextView
+                android:id="@+id/WEGT_1"
+                android:text="@string/EGTM_result"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                />
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/Result_2"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/Thrust_2"
+                android:text="@string/thrust_result"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                />
+
+            <TextView
+                android:id="@+id/EGT_2"
+                android:text="@string/EGTM_result"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                />
+            <TextView
+                android:id="@+id/WEGT_2"
+                android:text="@string/EGTM_result"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                />
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/Result_3"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/Thrust_3"
+                android:text="@string/thrust_result"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:layout_width="0dp"
+                />
+
+
+            <TextView
+                android:id="@+id/EGT_3"
+                android:text="@string/EGTM_result"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                />
+            <TextView
+                android:id="@+id/WEGT_3"
+                android:text="@string/EGTM_result"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                />
+
+
+
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/Result_4"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/Thrust_4"
+                android:text="@string/thrust_result"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                />
+
+            <TextView
+                android:id="@+id/EGT_4"
+                android:text="@string/EGTM_result"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                />
+            <TextView
+                android:id="@+id/WEGT_4"
+                android:text="@string/EGTM_result"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                />
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/Result_5"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/Thrust_5"
+                android:text="@string/thrust_result"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                />
+
+            <TextView
+                android:id="@+id/EGT_5"
+                android:text="@string/EGTM_result"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                />
+            <TextView
+                android:id="@+id/WEGT_5"
+                android:text="@string/EGTM_result"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                />
+        </TableRow>
+
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/filler"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/filler2"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                />
+
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:text=""
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:text=""
+                />
+
+            <Button
+                android:id="@+id/reset_button"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:text="@string/reset_button" />
+
+        </TableRow>
+
+
+
+    </TableLayout>
+
+
+
+</RelativeLayout>
+
