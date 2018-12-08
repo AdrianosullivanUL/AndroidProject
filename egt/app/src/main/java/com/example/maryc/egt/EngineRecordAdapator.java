@@ -33,7 +33,8 @@ public class EngineRecordAdapator extends RecyclerView.Adapter<EngineRecordAdapa
     {
         CollectionReference engineRecordCollectionRef = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_ENGINE_RECORD);
         engineRecordCollectionRef
-                .orderBy(Constants.KEY_CREATED,Query.Direction.DESCENDING)
+                .orderBy(Constants.KEY_RECORD_DATE
+                        ,Query.Direction.DESCENDING)
                 .limit(50)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -60,13 +61,13 @@ public class EngineRecordAdapator extends RecyclerView.Adapter<EngineRecordAdapa
         DocumentSnapshot ds = mEngineRecords.get(i);
         String ESN = (String) ds.get(Constants.KEY_ESN);
         String ModelAndDesig = (String) ds.get(Constants.KEY_ENGINE_MODEL) + (String) ds.get(Constants.KEY_ENGINE_DESIGNATION);
-        Date date = (Date)ds.get(Constants.KEY_RECORD_DATE);
-        String egt = (String) ds.get(Constants.KEY_CURRENT_EGT;
+        //Date date = (Date)ds.get(Constants.KEY_RECORD_DATE);
+        String egt = (String) ds.get(Constants.KEY_CURRENT_EGT).toString();
         //String date = (String) ds.get(Constants.KEY_CREATED);
         engineRecordViewHolder.mESNTextView.setText(ESN);
         engineRecordViewHolder.mModelDesigTextView.setText(ModelAndDesig);
-        engineRecordViewHolder.mDate.setText(date.toString());
-        engineRecordViewHolder.mDate.setText(egt);
+       // engineRecordViewHolder.mDate.setText(date.toString());
+        engineRecordViewHolder.mEgt.setText(egt);
 
         //engineRecordViewHolder.mDate.setText();
     }
@@ -80,6 +81,7 @@ public class EngineRecordAdapator extends RecyclerView.Adapter<EngineRecordAdapa
         private TextView mESNTextView;
         private TextView mModelDesigTextView;
         private TextView mDate;
+        private TextView mEgt;
 
 
         public EngineRecordViewHolder(@NonNull final View itemView) {
@@ -87,6 +89,8 @@ public class EngineRecordAdapator extends RecyclerView.Adapter<EngineRecordAdapa
             mESNTextView = itemView.findViewById(R.id.itemview_ESN);
             mModelDesigTextView = itemView.findViewById(R.id.itemview_engine_model_and_desig);
             mDate = itemView.findViewById(R.id.itemview_date);
+            mEgt =  itemView.findViewById(R.id.itemview_current_egt);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
