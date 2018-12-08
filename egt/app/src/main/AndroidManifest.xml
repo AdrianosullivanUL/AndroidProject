@@ -21,7 +21,7 @@
         </activity>
         <activity
             android:name=".EGTMarginDetailActivity"
-            android:label="@string/title_activity_egtmargin_detail"
+            android:label="EGT MARGIN CALCULATION"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
