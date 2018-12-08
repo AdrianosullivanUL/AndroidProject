@@ -38,7 +38,7 @@ public class EGTResult {
         this.mRemainingCycles = RemainingCycles;
     }
 
-    public int getmShopVisitYear() {
+    public int getShopVisitYear() {
         return mShopVisitYear;
     }
 

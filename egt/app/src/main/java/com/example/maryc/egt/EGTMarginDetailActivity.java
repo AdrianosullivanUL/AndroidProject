@@ -47,6 +47,7 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
        mESNTextView  = findViewById(R.id.ESN_detail_textview);
        mModelDesigTextView = findViewById(R.id.Type_detail_textview);
        mEgt = findViewById(R.id.Current_egt_detail_textview);
+       populateTable(docId);
 
       // Temp code only
        // mModelDesigTextView.setText(docId);
@@ -68,21 +69,21 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+       // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+       // fab.setOnClickListener(new View.OnClickListener() {
+          //  @Override
+           // public void onClick(View view) {
+            //    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+              //          .setAction("Action", null).show();
+          //  }
+       // });
     }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+   public boolean onCreateOptionsMenu(Menu menu) {
 
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_egt_detail, menu);
-        return true;
+        //Inflate the menu; this adds items to the action bar if it is present.
+       getMenuInflater().inflate(R.menu.menu_egt_detail, menu);
+       return true;
     }
 
     @Override
@@ -105,7 +106,8 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
 
         final TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayout_EGT_detail);
 
-        DBHelper dbHelper = new DBHelper();
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        DBHelper dbHelper = new DBHelper(this,db);
 
         EngineRecord engineRecord = dbHelper.getEngineRecord(engineRecordId);
 
@@ -119,22 +121,22 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
 
             // Creation textView
             final TextView textThrusts = new TextView(this);
-            //textThrusts.setText(egtResult.getmThrust());
+            textThrusts.setText(String.format("%2d",egtResult.getThrust()));
             textThrusts.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
 
             // Creation textView
             final TextView textEGTMargin = new TextView(this);
-            //textEGTMargin.setText(egtResult.getmEGTMargin());
+            textEGTMargin.setText(String.format("%2d",egtResult.getEGTMargin()));
             textEGTMargin.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
 
             // Creation textView
             final TextView textRemainingCycles = new TextView(this);
-           // textRemainingCycles.setText(egtResult.getmRemainingCycles());
+            textRemainingCycles.setText(String.format("%2d",egtResult.getRemainingCycles()));
             textRemainingCycles.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
 
             // Creation textView
             final TextView textShopVisitYear = new TextView(this);
-            textShopVisitYear.setText(egtResult.getmShopVisitYear());
+            textShopVisitYear.setText(String.format("%2d",egtResult.getShopVisitYear()));
             textShopVisitYear.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
 
 
