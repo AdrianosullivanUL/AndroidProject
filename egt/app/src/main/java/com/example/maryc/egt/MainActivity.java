@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner esn_spinner;
     private List<EngineModel> mEngineModels;
     private List<String> mESNs;
+    private Button submitButton;
 
     private ArrayAdapter<String> esnAdapter;
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         esn_spinner = findViewById(R.id.ESN_spinner);
-        Button submitButton = findViewById(R.id.submit_button);
+        submitButton = findViewById(R.id.submit_button);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 recycleView.setAdapter(engineRecordAdapator);
             }
         });
+        submitButton.setEnabled(false);
 
         db = FirebaseFirestore.getInstance();
         mDBHelper = new DBHelper(this, db);
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, mESNs);
         esnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         esn_spinner.setAdapter(esnAdapter);
+        submitButton.setEnabled(true);
     }
 
     private void addNewEngineRecord() {
