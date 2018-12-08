@@ -11,12 +11,13 @@
     tools:showIn="@layout/activity_egtmargin_detail">
 
     <TableLayout
-        android:id="@+id/tableLayout1"
+        android:id="@+id/tableLayout_EGT_detail"
         android:layout_marginTop="10dp"
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TableRow
+            android:id="@+id/ESN"
             android:background="@color/header"
             android:padding="5dp"
             android:layout_width="match_parent"
@@ -44,6 +45,7 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/Type"
             android:background="@color/header"
             android:padding="5dp"
             android:layout_width="match_parent"
@@ -72,6 +74,7 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/EGT"
             android:background="@color/header"
             android:padding="5dp"
             android:layout_width="match_parent"
@@ -79,7 +82,7 @@
 
 
          <TextView
-            android:id="@+id/Current_egt_detail_textview"
+            android:id="@+id/Current_egt_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -89,7 +92,7 @@
             android:text="Current EGT"
             />
         <TextView
-            android:id="@+id/currentEGT_detail_textview"
+            android:id="@+id/Current_egt_detail_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -98,17 +101,16 @@
             android:gravity="right"
             android:text="EGT goes Here"/>
         </TableRow>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_marginTop="15dp"
-        android:padding="8dp"
+        <TableRow
+        android:id="@+id/Filler"
+        android:background="@android:color/white"
+        android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </LinearLayout>
+        android:layout_height="match_parent">
+        </TableRow>
 
         <TableRow
+            android:id="@+id/Headers"
             android:background="@color/header"
             android:padding="5dp"
             android:layout_width="match_parent"
@@ -119,7 +121,7 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:textAlignment="center"
-                android:text="@string/thrust"/>
+                android:text="Thrust(k)"/>
 
             <TextView
                 android:id="@+id/egtTextView"
@@ -128,7 +130,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:text="@string/EGTM"/>
-            />
+
             <TextView
                 android:id="@+id/remainingCyclesView"
                 android:layout_width="0dp"
@@ -143,11 +145,11 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:text="SV YEAR"/>
-            />
+
         </TableRow>
 
         <TableRow
-            android:id="@+id/Result_1"
+            android:id="@+id/Result"
             android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -171,7 +173,7 @@
                 />
             <TextView
                 android:id="@+id/Cycles_remaining_detail"
-                android:text="@string/EGTM_result"
+                android:text="@string/Cycles_remaining_result"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -179,7 +181,7 @@
                 />
             <TextView
                 android:id="@+id/SVYear_detail"
-                android:text="@string/EGTM_result"
+                android:text="@string/shopvist_Year_result"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_width="0dp"
