@@ -22,6 +22,7 @@
     <string name="Cancel">Cancel</string>
     <string name="Hours">Hours</string>
     <string name="title_activity_egtmargin_detail">EGTMarginDetailActivity</string>
+    <string name="action_delete">delete</string>
 
 
 </resources>
