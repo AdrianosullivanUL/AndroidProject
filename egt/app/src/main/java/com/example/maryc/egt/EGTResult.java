@@ -13,37 +13,37 @@ public class EGTResult {
         this.mShopVisitYear = ShopVisitYear;
     }
 
-    public int getmThrust() {
+    public int getThrust() {
         return mThrust;
     }
 
 
-    public void setmThrust(int mThrust) {
-        this.mThrust = mThrust;
+    public void setThrust(int Thrust) {
+        this.mThrust = Thrust;
     }
 
-    public int getmEGTMargin() {
+    public int getEGTMargin() {
         return mEGTMargin;
     }
 
-    public void setmEGTMargin(int mEGTMargin) {
-        this.mEGTMargin = mEGTMargin;
+    public void setEGTMargin(int EGTMargin) {
+        this.mEGTMargin = EGTMargin;
     }
 
-    public int getmRemainingCycles() {
+    public int getRemainingCycles() {
         return mRemainingCycles;
     }
 
-    public void setmRemainingCycles(int mRemainingCycles) {
-        this.mRemainingCycles = mRemainingCycles;
+    public void setRemainingCycles(int RemainingCycles) {
+        this.mRemainingCycles = RemainingCycles;
     }
 
     public int getmShopVisitYear() {
         return mShopVisitYear;
     }
 
-    public void setmShopVisitYear(int mShopVisitYear) {
-        this.mShopVisitYear = mShopVisitYear;
+    public void setShopVisitYear(int ShopVisitYear) {
+        this.mShopVisitYear = ShopVisitYear;
     }
 
 

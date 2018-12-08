@@ -153,5 +153,13 @@ public class DBHelper {
         return myEGTResult;
 
     }
+    public EngineRecord getEngineRecord(String EngineRecordId) {
+        EngineRecord engineRecord = new EngineRecord();
+        engineRecord.setESN("123456");
+        engineRecord.setEngineModel("CFM56-7B");
+        //engineRecord.setRecordDate(New GregorianCalendar.);
+        engineRecord.setCurrentEGT(796);
+        return engineRecord;
+    }
 
 }
