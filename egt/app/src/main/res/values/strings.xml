@@ -23,6 +23,7 @@
     <string name="Hours">Hours</string>
     <string name="title_activity_egtmargin_detail">EGTMarginDetailActivity</string>
     <string name="action_delete">delete</string>
+    <string name="submit">Submit</string>
 
 
 </resources>
