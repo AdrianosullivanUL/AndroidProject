@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -32,8 +33,13 @@ import java.util.Map;
 import static android.app.PendingIntent.getActivity;
 
 public class MainActivity extends AppCompatActivity {
-    DBHelper mDBHelper;
-    List<EngineModel> mEngineModels;
+    private DBHelper mDBHelper;
+    private FirebaseFirestore db;
+    private Spinner esn_spinner;
+    private List<EngineModel> mEngineModels;
+    private List<String> mESNs;
+
+    private ArrayAdapter<String> esnAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,25 +48,27 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mDBHelper = new DBHelper();
+        esn_spinner = findViewById(R.id.ESN_spinner);
+        Button submitButton = findViewById(R.id.submit_button);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RecyclerView recycleView = findViewById(R.id.recycler_view);
+                recycleView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                recycleView.setHasFixedSize(true);
+                EngineRecordAdapator engineRecordAdapator = new EngineRecordAdapator(esn_spinner.getSelectedItem().toString());
+                recycleView.setAdapter(engineRecordAdapator);
+            }
+        });
+
+        db = FirebaseFirestore.getInstance();
+        mDBHelper = new DBHelper(this, db);
         mDBHelper.populateEngines();
         mDBHelper.populateEngineModels();
         mDBHelper.populateEngineDesignations();
 
         // Add Engine Models to the Array List
-        final List<String> mESNs = mDBHelper.getESNs();
-        final Spinner esn_spinner = findViewById(R.id.ESN_spinner);
-        ArrayAdapter<String> esnAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, mESNs);
-        esnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        esn_spinner.setAdapter(esnAdapter);
 
-
-        RecyclerView recycleView = findViewById(R.id.recycler_view);
-        recycleView.setLayoutManager(new LinearLayoutManager(this));
-        recycleView.setHasFixedSize(true);
-        EngineRecordAdapator engineRecordAdapator = new EngineRecordAdapator();
-        recycleView.setAdapter(engineRecordAdapator);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +79,14 @@ public class MainActivity extends AppCompatActivity {
                 //        .setAction("Action", null).show();
             }
         });
+    }
+
+    public void setESNAdaptor() {
+        mESNs = mDBHelper.getESNs();
+        esnAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, mESNs);
+        esnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        esn_spinner.setAdapter(esnAdapter);
     }
 
     private void addNewEngineRecord() {
@@ -245,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
                             mTimeSinceNew,
                             mCyclesSinceNew, 0);
 
-                    mDBHelper.addEngineRecord( mEngineRecord);
+                    mDBHelper.addEngineRecord(mEngineRecord);
                     alertDialog.dismiss();
                     // MC TODO Launch result dialog from here
                 }
@@ -254,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

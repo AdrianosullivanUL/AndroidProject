@@ -29,10 +29,11 @@ import java.util.List;
 public class EngineRecordAdapator extends RecyclerView.Adapter<EngineRecordAdapator.EngineRecordViewHolder> {
     private List<DocumentSnapshot> mEngineRecords = new ArrayList<>();
 
-    public EngineRecordAdapator()
+    public EngineRecordAdapator(String ESN)
     {
         CollectionReference engineRecordCollectionRef = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_ENGINE_RECORD);
         engineRecordCollectionRef
+                .whereEqualTo("ESN", ESN)
                 .orderBy(Constants.KEY_RECORD_DATE
                         ,Query.Direction.DESCENDING)
                 .limit(50)
@@ -61,12 +62,11 @@ public class EngineRecordAdapator extends RecyclerView.Adapter<EngineRecordAdapa
         DocumentSnapshot ds = mEngineRecords.get(i);
         String ESN = (String) ds.get(Constants.KEY_ESN);
         String ModelAndDesig = (String) ds.get(Constants.KEY_ENGINE_MODEL) + (String) ds.get(Constants.KEY_ENGINE_DESIGNATION);
-        //Date date = (Date)ds.get(Constants.KEY_RECORD_DATE);
+        Date date = (Date)ds.get(Constants.KEY_RECORD_DATE);
         String egt = (String) ds.get(Constants.KEY_CURRENT_EGT).toString();
-        //String date = (String) ds.get(Constants.KEY_CREATED);
         engineRecordViewHolder.mESNTextView.setText(ESN);
         engineRecordViewHolder.mModelDesigTextView.setText(ModelAndDesig);
-       // engineRecordViewHolder.mDate.setText(date.toString());
+        engineRecordViewHolder.mDate.setText(date.toString());
         engineRecordViewHolder.mEgt.setText(egt);
 
         //engineRecordViewHolder.mDate.setText();
