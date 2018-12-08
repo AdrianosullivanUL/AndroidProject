@@ -104,15 +104,18 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
 
         // TODO: Populate EngineRecordId
 
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DBHelper dbHelper = new DBHelper(this, db);
+
+        //EngineRecord engineRecord = dbHelper.getEngineRecord(engineRecordId);
+        dbHelper.generateResults(engineRecordId);
+    }
+    public void populateTableResults(List<EGTResult> egtResults)
+    {
         final TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayout_EGT_detail);
-
-        FirebaseFirestore db=FirebaseFirestore.getInstance();
-        DBHelper dbHelper = new DBHelper(this,db);
-
-        EngineRecord engineRecord = dbHelper.getEngineRecord(engineRecordId);
-
-        List<EGTResult> egtResults = new ArrayList<EGTResult>();
-        egtResults = dbHelper.generateResults(engineRecordId);
+       //
         for (EGTResult egtResult : egtResults) {
 
             // Creation row
