@@ -226,7 +226,7 @@ public class DBHelper {
 
     }
 
-    private List<EGTResult> buildEGTResults(String engineModel, String engineDesignation,
+    private void buildEGTResults(String engineModel, String engineDesignation,
                                          final int CurrentCycles, final int CurrentEGT) {
         mEGTResult.clear();
         db.collection(Constants.COLLECTION_ENGINE_DESIGNATION)
