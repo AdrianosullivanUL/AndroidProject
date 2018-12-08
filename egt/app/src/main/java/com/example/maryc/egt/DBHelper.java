@@ -31,6 +31,7 @@ public class DBHelper {
     private final List<String> mEngineModels = new ArrayList<String>();
     private final List<EngineDesignation> mEngineDesignations = new ArrayList<EngineDesignation>();
     private final List<Engine> mEngines = new ArrayList<Engine>();
+    private final List<EGTResult> mEGTResult = new ArrayList<>();
     private Context context;
 
     public DBHelper(Context context, FirebaseFirestore db) {
@@ -186,16 +187,80 @@ public class DBHelper {
                     }
                 });
     }
-    public List<EGTResult> generateResults(String EngineRecordId)
+    public void generateResults(String EngineRecordId)
     {
-        List<EGTResult> myEGTResult = new ArrayList<>();
-        myEGTResult.add(new EGTResult(22000,70,3500,2022));
-        myEGTResult.add(new EGTResult(24000,65,3000,2021));
-        myEGTResult.add(new EGTResult(26000,60,2800,2020));
+        db.collection(Constants.COLLECTION_ENGINE_RECORD)
+                .whereEqualTo("id", EngineRecordId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(Constants.TAG, document.getId() + " => " + document.getData());
+                                String engineDesignation = document.get(Constants.KEY_ENGINE_DESIGNATION).toString();
+                                String engineModel =  document.get(Constants.KEY_ENGINE_MODEL).toString();
+                                int cyclesSinceNew = (int)document.get(Constants.KEY_CYCLES_SINCE_NEW);
+                                int currentEGT = (int)document.get(Constants.KEY_CURRENT_EGT);
 
-        return myEGTResult;
+                                buildEGTResults(engineModel,engineDesignation, currentEGT, cyclesSinceNew);
+
+
+
+
+                            }
+
+
+                        } else {
+                            Log.d(Constants.TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+
+       // myEGTResult.add(new EGTResult(22000,70,3500,2022));
+       // myEGTResult.add(new EGTResult(24000,65,3000,2021));
+       // myEGTResult.add(new EGTResult(26000,60,2800,2020));
+
 
     }
+
+    private List<EGTResult> buildEGTResults(String engineModel, String engineDesignation,
+                                         final int CurrentCycles, final int CurrentEGT) {
+        mEGTResult.clear();
+        db.collection(Constants.COLLECTION_ENGINE_DESIGNATION)
+                .whereEqualTo(Constants.KEY_ENGINE_MODEL, engineModel)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(Constants.TAG, document.getId() + " => " + document.getData());
+                                int cyclesPerDegree = Integer.parseInt(document.get(Constants.KEY_CYCLES_PER_DEGREE).toString());
+                                int redLineTemperature = Integer.parseInt(document.get(Constants.KEY_RED_LINE_TEMRERATURE).toString());
+                                int thrustInK = Integer.parseInt(document.get(Constants.KEY_THRUST_IN_K).toString());
+                                int averageCyclesPerYear = Integer.parseInt(document.get(Constants.KEY_AVERAGE_CYCLES_PER_YEAR).toString());
+
+                                int remainingCycles  = CurrentCycles ;
+
+                                int egtMargin = redLineTemperature - CurrentEGT;
+                                int shopVisitYear = egtMargin * cyclesPerDegree / averageCyclesPerYear;
+                                EGTResult egtResult = new EGTResult(thrustInK,remainingCycles,shopVisitYear,egtMargin);
+                                mEGTResult.add(egtResult);
+                            }
+                            EGTMarginDetailActivity egtMarginDetailActivity = (EGTMarginDetailActivity)context;
+                            egtMarginDetailActivity.populateTableResults(mEGTResult);
+
+
+                        } else {
+                            Log.d(Constants.TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
     public EngineRecord getEngineRecord(String EngineRecordId) {
         EngineRecord engineRecord = new EngineRecord();
         engineRecord.setESN("123456");
