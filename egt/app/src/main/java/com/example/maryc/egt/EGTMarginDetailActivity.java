@@ -15,6 +15,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 public class EGTMarginDetailActivity extends AppCompatActivity {
+    private TextView mESNTextView;
+    private TextView mModelDesigTextView;
+    private TextView mDate;
+    private TextView mEgt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +29,12 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
 
         Intent receivedIntent = getIntent();
         String docId = receivedIntent.getStringExtra(Constants.EXTRA_DOCUMENT_ID);
-        //mESNTextView  = findViewById(R.id.detail_quote);
-       // mModelDesigTextView = findViewById(R.id.detail_movie);
+       mESNTextView  = findViewById(R.id.ESN_detail_textview);
+       mModelDesigTextView = findViewById(R.id.Type_detail_textview);
+       mEgt = findViewById(R.id.Current_egt_detail_textview);
+
+      // Temp code only
+       // mModelDesigTextView.setText(docId);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
