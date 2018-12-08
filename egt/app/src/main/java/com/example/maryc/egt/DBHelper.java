@@ -1,5 +1,6 @@
 package com.example.maryc.egt;
 
+import android.content.Context;
 import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -30,11 +31,15 @@ public class DBHelper {
     private final List<String> mEngineModels = new ArrayList<String>();
     private final List<EngineDesignation> mEngineDesignations = new ArrayList<EngineDesignation>();
     private final List<Engine> mEngines = new ArrayList<Engine>();
+    private Context context;
 
-    public DBHelper() {
-        db = FirebaseFirestore.getInstance();
+    public DBHelper(Context context, FirebaseFirestore db) {
+        this.db = db;
+        this.context = context;
 
     }
+
+
 
     public void populateEngineModels() {
         int i = 0;
@@ -51,6 +56,8 @@ public class DBHelper {
                                 String mEngineModel = document.get(Constants.KEY_ENGINE_MODEL).toString();
                                 mEngineModels.add(mEngineModel);
                             }
+
+
                         } else {
                             Log.d(Constants.TAG, "Error getting documents: ", task.getException());
                         }
@@ -74,6 +81,8 @@ public class DBHelper {
                                 engine.setEngineModel(document.get(Constants.KEY_ENGINE_MODEL).toString());
                                 mEngines.add(engine);
                             }
+                            MainActivity mainActivity = (MainActivity)context;
+                            mainActivity.setESNAdaptor();
                         } else {
                             Log.d(Constants.TAG, "Error getting documents: ", task.getException());
                         }
