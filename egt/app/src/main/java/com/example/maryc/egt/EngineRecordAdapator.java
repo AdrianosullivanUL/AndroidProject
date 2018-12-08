@@ -80,12 +80,16 @@ public class EngineRecordAdapator extends RecyclerView.Adapter<EngineRecordAdapa
             super(itemView);
             mESNTextView = itemView.findViewById(R.id.itemview_ESN);
             mModelDesigTextView = itemView.findViewById(R.id.itemview_engine_model_and_desig);
+
             mDate = itemView.findViewById(R.id.itemview_date);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Context c = v.getContext();
+                    DocumentSnapshot ds = mEngineRecords.get(getAdapterPosition());
+                    //mESNTextView.setText(ds.get(Constants.KEY_ESN));
+                    Context c = itemView.getContext();
                     Intent intent = new Intent(c,EGTMarginDetailActivity.class);
+                    intent.putExtra(Constants.EXTRA_DOCUMENT_ID, ds.getId());
                     c.startActivity(intent);
                 }
             });

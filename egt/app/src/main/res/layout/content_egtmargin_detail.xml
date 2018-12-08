@@ -10,9 +10,12 @@
     android:padding="5dp"
     tools:showIn="@layout/activity_egtmargin_detail">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/ESN_detail"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="8dp"
@@ -22,17 +25,20 @@
         />
     <TextView
         android:id="@+id/ESN_detail_textview"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="8dp"
         android:textSize="10pt"
         android:gravity="right"
-        android:text="ESN"/>
-
+        android:text="ESN goes Here"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
         android:id="@+id/Type_detail"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="8dp"
@@ -41,33 +47,39 @@
         android:text="ESN TYPE"        />
     <TextView
         android:id="@+id/Type_detail_textview"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="8dp"
         android:textSize="10pt"
         android:gravity="right"
-        android:text="type">
-    </TextView>
+        android:text="type Goes Here"
+        />
+
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
-        android:id="@+id/Current_egt_detail"
-        android:layout_width="fill_parent"
+        android:id="@+id/Current_egt_detail_textview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="8dp"
         android:gravity="left"
         android:textSize="10pt"
-        android:text="CURRENT EGT"
+        android:text="EGT goes here"
         />
     <TextView
         android:id="@+id/currentEGT_detail_textview"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="8dp"
         android:textSize="10pt"
         android:gravity="right"
         android:text="egt detail"/>
+    </LinearLayout>
 
 
     <LinearLayout

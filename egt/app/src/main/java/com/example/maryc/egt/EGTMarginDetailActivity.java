@@ -23,6 +23,11 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent receivedIntent = getIntent();
+        String docId = receivedIntent.getStringExtra(Constants.EXTRA_DOCUMENT_ID);
+        //mESNTextView  = findViewById(R.id.detail_quote);
+       // mModelDesigTextView = findViewById(R.id.detail_movie);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
