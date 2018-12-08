@@ -13,12 +13,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class EGTMarginDetailActivity extends AppCompatActivity {
     private TextView mESNTextView;
     private TextView mModelDesigTextView;
     private TextView mDate;
     private TextView mEgt;
+    private DocumentReference mDocRef;
+    private DocumentSnapshot mDocSnapshot;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +50,23 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
 
       // Temp code only
        // mModelDesigTextView.setText(docId);
+        mDocRef = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_ENGINE_RECORD).document(docId);
+        mDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(Constants.TAG, "Listen failed");
+                    return;
+                }
+                if (documentSnapshot.exists()) {
+                    mDocSnapshot = documentSnapshot;
+                    mESNTextView.setText((String) documentSnapshot.get(Constants.KEY_ESN));
+                    mModelDesigTextView.setText((String) documentSnapshot.get(Constants.KEY_ENGINE_MODEL));
+                    mEgt.setText((String) documentSnapshot.get(Constants.KEY_CURRENT_EGT).toString());
+                }
+
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -65,5 +97,58 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void populateTable(String engineRecordId) {
+
+
+        // TODO: Populate EngineRecordId
+
+        final TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayout_EGT_detail);
+
+        DBHelper dbHelper = new DBHelper();
+
+        EngineRecord engineRecord = dbHelper.getEngineRecord(engineRecordId);
+
+        List<EGTResult> egtResults = new ArrayList<EGTResult>();
+        egtResults = dbHelper.generateResults(engineRecordId);
+        for (EGTResult egtResult : egtResults) {
+
+            // Creation row
+            final TableRow tableRow = new TableRow(this);
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
+
+            // Creation textView
+            final TextView textThrusts = new TextView(this);
+            //textThrusts.setText(egtResult.getmThrust());
+            textThrusts.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+            // Creation textView
+            final TextView textEGTMargin = new TextView(this);
+            //textEGTMargin.setText(egtResult.getmEGTMargin());
+            textEGTMargin.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+            // Creation textView
+            final TextView textRemainingCycles = new TextView(this);
+           // textRemainingCycles.setText(egtResult.getmRemainingCycles());
+            textRemainingCycles.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+            // Creation textView
+            final TextView textShopVisitYear = new TextView(this);
+            textShopVisitYear.setText(egtResult.getmShopVisitYear());
+            textShopVisitYear.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+
+            tableRow.addView(textThrusts);
+            tableRow.addView(textEGTMargin);
+            tableRow.addView(textRemainingCycles);
+            tableRow.addView(textShopVisitYear);
+
+            tableLayout.addView(tableRow);
+
+        }
+
+    }
+
+
 
 }
