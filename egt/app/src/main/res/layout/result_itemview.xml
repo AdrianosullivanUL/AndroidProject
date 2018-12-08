@@ -18,7 +18,7 @@
         android:padding="8dp"
         android:gravity="left"
         android:textSize="10pt"
-        android:text="@string/ESN"
+        android:text="ESN"
         />
     <TextView
         android:id="@+id/right_text_color_points"

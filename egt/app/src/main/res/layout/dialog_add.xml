@@ -7,12 +7,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ESN" />
+        android:text="ESN" />
     <EditText
         android:id="@+id/esn_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/ESN"
+        android:hint="ESN"
         android:inputType="textCapSentences" />
 
     <TextView
