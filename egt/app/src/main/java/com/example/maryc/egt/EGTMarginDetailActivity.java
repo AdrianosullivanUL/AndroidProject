@@ -47,7 +47,7 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
        mESNTextView  = findViewById(R.id.ESN_detail_textview);
        mModelDesigTextView = findViewById(R.id.Type_detail_textview);
        mEgt = findViewById(R.id.Current_egt_detail_textview);
-       populateTable(docId);
+
 
       // Temp code only
        // mModelDesigTextView.setText(docId);
@@ -64,6 +64,7 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
                     mESNTextView.setText((String) documentSnapshot.get(Constants.KEY_ESN));
                     mModelDesigTextView.setText((String) documentSnapshot.get(Constants.KEY_ENGINE_MODEL));
                     mEgt.setText((String) documentSnapshot.get(Constants.KEY_CURRENT_EGT).toString());
+                    populateTable(documentSnapshot);
                 }
 
             }
@@ -90,22 +91,23 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete:
-                mDocRef.delete();
-                finish();
+                // TODO delete EGT Entry and close activity
+                //mDocRef.delete();
+                //finish();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void populateTable(String engineRecordId) {
+    public void populateTable(DocumentSnapshot documentSnapshot) {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DBHelper dbHelper = new DBHelper(this, db);
 
         //EngineRecord engineRecord = dbHelper.getEngineRecord(engineRecordId);
-        dbHelper.generateResults(engineRecordId);
+        dbHelper.generateResults(documentSnapshot);
     }
     public void populateTableResults(List<EGTResult> egtResults)
     {

@@ -187,46 +187,23 @@ public class DBHelper {
                     }
                 });
     }
-    public void generateResults(String EngineRecordId)
+    public void generateResults(DocumentSnapshot document)
     {
-        db.collection(Constants.COLLECTION_ENGINE_RECORD)
-                .whereEqualTo("id", EngineRecordId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(Constants.TAG, document.getId() + " => " + document.getData());
                                 String engineDesignation = document.get(Constants.KEY_ENGINE_DESIGNATION).toString();
                                 String engineModel =  document.get(Constants.KEY_ENGINE_MODEL).toString();
-                                int cyclesSinceNew = (int)document.get(Constants.KEY_CYCLES_SINCE_NEW);
-                                int currentEGT = (int)document.get(Constants.KEY_CURRENT_EGT);
-
-                                buildEGTResults(engineModel,engineDesignation, currentEGT, cyclesSinceNew);
-
-
-
-
-                            }
-
-
-                        } else {
-                            Log.d(Constants.TAG, "Error getting documents: ", task.getException());
-                        }
+        int cyclesSinceNew = Integer.parseInt(document.get(Constants.KEY_CYCLES_SINCE_NEW).toString());
+        int currentEGT = 0;
+        try {
+            String currentEGTString = document.get(Constants.KEY_CURRENT_EGT).toString() ;
+                    currentEGT = Integer.parseInt(currentEGTString);
                     }
-                });
-
-
-
-       // myEGTResult.add(new EGTResult(22000,70,3500,2022));
-       // myEGTResult.add(new EGTResult(24000,65,3000,2021));
-       // myEGTResult.add(new EGTResult(26000,60,2800,2020));
-
-
+        catch   (Exception ex)
+        {}
+        buildEGTResults(engineModel,engineDesignation, currentEGT, cyclesSinceNew);
     }
 
-    private void buildEGTResults(String engineModel, String engineDesignation,
+    private List<EGTResult> buildEGTResults(String engineModel, String engineDesignation,
                                          final int CurrentCycles, final int CurrentEGT) {
         mEGTResult.clear();
         db.collection(Constants.COLLECTION_ENGINE_DESIGNATION)
