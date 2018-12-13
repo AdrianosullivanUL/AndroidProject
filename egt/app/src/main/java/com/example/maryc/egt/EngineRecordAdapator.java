@@ -22,6 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.w3c.dom.Document;
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -62,11 +63,13 @@ public class EngineRecordAdapator extends RecyclerView.Adapter<EngineRecordAdapa
         DocumentSnapshot ds = mEngineRecords.get(i);
         String ESN = (String) ds.get(Constants.KEY_ESN);
         String ModelAndDesig = (String) ds.get(Constants.KEY_ENGINE_MODEL) + (String) ds.get(Constants.KEY_ENGINE_DESIGNATION);
-        Date date = (Date)ds.get(Constants.KEY_RECORD_DATE);
+        Date date = (Date)ds.get(Constants.KEY_RECORD_DATE);String pattern = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String dateFmt = simpleDateFormat.format(date);
         String egt = (String) ds.get(Constants.KEY_CURRENT_EGT).toString();
         engineRecordViewHolder.mESNTextView.setText(ESN);
         engineRecordViewHolder.mModelDesigTextView.setText(ModelAndDesig);
-        engineRecordViewHolder.mDate.setText(date.toString());
+        engineRecordViewHolder.mDate.setText(dateFmt);
         engineRecordViewHolder.mEgt.setText(egt);
 
         //engineRecordViewHolder.mDate.setText();
