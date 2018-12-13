@@ -224,9 +224,10 @@ public class DBHelper {
                                 int thrustInK = Integer.parseInt(document.get(Constants.KEY_THRUST_IN_K).toString());
                                 int averageCyclesPerYear = Integer.parseInt(document.get(Constants.KEY_AVERAGE_CYCLES_PER_YEAR).toString());
 
-                                int remainingCycles = CurrentCycles;
+
 
                                 int egtMargin = redLineTemperature - CurrentEGT;
+                                int remainingCycles = egtMargin * cyclesPerDegree;
                                 int shopVisitYear = Calendar.getInstance().get(Calendar.YEAR) + ((egtMargin * cyclesPerDegree) / averageCyclesPerYear);
                                 EGTResult egtResult = new EGTResult(designation, thrustInK, egtMargin, remainingCycles, shopVisitYear);
 
@@ -297,39 +298,40 @@ public class DBHelper {
     }
 
     private void CreateDesignations() {
-        addDesignation("CFM56-5B", "3/P", 26, 940, 1180, 2500);
-        addDesignation("CFM56-5B", "4/P", 21, 990, 1407, 2500);
-        addDesignation("CFM56-5B", "5/P", 26, 990, 1473, 2500);
-        addDesignation("CFM56-5B", "7/P", 21, 1040, 1471, 2500);
-        addDesignation("CFM56-5B", "8/P", 22, 1080, 2295, 2500);
-        addDesignation("CFM56-5B", "9/P", 20, 1140, 2300, 2500);
-        addDesignation("CFM56-7B", "20/3", 22, 1230, 1500, 2600);
-        addDesignation("CFM56-7B", "22/3", 23, 1030, 1349, 2600);
-        addDesignation("CFM56-7B", "24/3", 25, 1010, 1619, 2600);
-        addDesignation("CFM56-7B", "26/3", 26, 1000, 1276, 2600);
-        addDesignation("CFM56-7B", "27/3", 23, 1030, 806, 2600);
-        addDesignation("CFM56-7B", "24/3B1", 25, 1010, 600, 2600);
-        addDesignation("CFM56-7B", "26/3B1", 26, 1000, 1512, 2600);
-        addDesignation("CFM56-7B", "27/3B1", 23, 1030, 552, 2600);
-        addDesignation("CFM56-7B", "24/B1", 31, 950, 800, 2600);
-        addDesignation("LEAP-1A", "35A", 31, 1023, 1000, 2700);
-        addDesignation("LEAP-1A", "33B2", 23, 1103, 1200, 2700);
-        addDesignation("LEAP-1A", "24E1", 26, 1073, 1100, 2700);
-        addDesignation("LEAP-1A", "26E1", 23, 1103, 1300, 2700);
-        addDesignation("LEAP-1A", "24", 26, 1073, 1500, 2700);
-        addDesignation("LEAP-1A", "26", 23, 1103, 1574, 2700);
-        addDesignation("LEAP-1A", "23", 31, 1023, 1400, 2700);
-        addDesignation("LEAP-1A", "30", 31, 1033, 1500, 2700);
-        addDesignation("LEAP-1A", "32", 31, 1033, 1288, 2700);
-        addDesignation("LEAP-1A", "33", 28, 1063, 818, 2700);
-        addDesignation("LEAP-1B", "28/B1", 28, 1063, 1700, 2800);
-        addDesignation("LEAP-1B", "28/B2", 28, 1063, 1800, 2800);
-        addDesignation("LEAP-1B", "28/B3", 27, 1073, 1900, 2800);
-        addDesignation("LEAP-1B", "27", 22, 1123, 864, 2800);
-        addDesignation("LEAP-1B", "21", 23, 1113, 900, 2800);
-        addDesignation("LEAP-1B", "23", 26, 1083, 1000, 2800);
-        addDesignation("LEAP-1B", "25", 28, 1063, 535, 2800);
-        addDesignation("LEAP-1B", "28", 28, 1033, 928, 2800);
+        addDesignation("CFM56-5B","3/P",32,940,1180,500);
+        addDesignation("CFM56-5B","4/P",27,990,1407,500);
+        addDesignation("CFM56-5B","7/P",27,990,1471,500);
+        addDesignation("CFM56-5B","9/P",23,1030,2300,500);
+        addDesignation("CFM56-5B","5/P",22,1040,1473,500);
+        addDesignation("CFM56-5B","8/P",22,1040,2295,500);
+        addDesignation("CFM56-7B","27/3",27,950,806,500);
+        addDesignation("CFM56-7B","27/3B1",27,950,552,500);
+        addDesignation("CFM56-7B","26/3",26,960,1276,500);
+        addDesignation("CFM56-7B","26/3B1",26,960,1512,500);
+        addDesignation("CFM56-7B","24/3",24,980,1619,500);
+        addDesignation("CFM56-7B","24/3B1",24,980,600,500);
+        addDesignation("CFM56-7B","24/B1",24,980,800,500);
+        addDesignation("CFM56-7B","22/3",23,990,1349,500);
+        addDesignation("CFM56-7B","20/3",21,1010,1500,500);
+        addDesignation("LEAP-1A","35A",32,1023,1000,500);
+        addDesignation("LEAP-1A","33B2",32,1023,1200,500);
+        addDesignation("LEAP-1A","30",32,1023,1500,500);
+        addDesignation("LEAP-1A","32",32,1023,1288,500);
+        addDesignation("LEAP-1A","33",32,1023,818,500);
+        addDesignation("LEAP-1A","26E1",27,1073,1300,500);
+        addDesignation("LEAP-1A","26",27,1073,1574,500);
+        addDesignation("LEAP-1A","24E1",24,1103,1100,500);
+        addDesignation("LEAP-1A","24",24,1103,1500,500);
+        addDesignation("LEAP-1A","23",24,1103,1400,500);
+        addDesignation("LEAP-1B","28/B1",29,1032,1700,500);
+        addDesignation("LEAP-1B","28/B2",29,1032,1800,500);
+        addDesignation("LEAP-1B","28/B3",29,1032,1900,500);
+        addDesignation("LEAP-1B","28",29,1032,928,500);
+        addDesignation("LEAP-1B","27",28,1042,864,500);
+        addDesignation("LEAP-1B","25",27,1052,535,500);
+        addDesignation("LEAP-1B","23",24,1082,1000,500);
+        addDesignation("LEAP-1B","21",23,1092,900,500);
+
 
     }
 

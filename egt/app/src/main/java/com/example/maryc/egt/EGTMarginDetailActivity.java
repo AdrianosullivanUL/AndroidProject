@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class EGTMarginDetailActivity extends AppCompatActivity {
@@ -44,13 +45,13 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
 
         Intent receivedIntent = getIntent();
         String docId = receivedIntent.getStringExtra(Constants.EXTRA_DOCUMENT_ID);
-       mESNTextView  = findViewById(R.id.ESN_detail_textview);
-       mModelDesigTextView = findViewById(R.id.Type_detail_textview);
-       mEgt = findViewById(R.id.Current_egt_detail_textview);
+        mESNTextView = findViewById(R.id.ESN_detail_textview);
+        mModelDesigTextView = findViewById(R.id.Type_detail_textview);
+        mEgt = findViewById(R.id.Current_egt_detail_textview);
 
 
-      // Temp code only
-       // mModelDesigTextView.setText(docId);
+        // Temp code only
+        // mModelDesigTextView.setText(docId);
         mDocRef = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_ENGINE_RECORD).document(docId);
         mDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -70,21 +71,22 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
             }
         });
 
-       // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-       // fab.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-           // public void onClick(View view) {
-            //    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-              //          .setAction("Action", null).show();
-          //  }
-       // });
+        // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        // fab.setOnClickListener(new View.OnClickListener() {
+        //  @Override
+        // public void onClick(View view) {
+        //    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        //          .setAction("Action", null).show();
+        //  }
+        // });
     }
+
     @Override
-   public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
         //Inflate the menu; this adds items to the action bar if it is present.
-       getMenuInflater().inflate(R.menu.menu_egt_detail, menu);
-       return true;
+        getMenuInflater().inflate(R.menu.menu_egt_detail, menu);
+        return true;
     }
 
     @Override
@@ -92,8 +94,8 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_delete:
                 // TODO delete EGT Entry and close activity
-                //mDocRef.delete();
-                //finish();
+                mDocRef.delete();
+                finish();
                 return true;
         }
 
@@ -109,30 +111,42 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
         //EngineRecord engineRecord = dbHelper.getEngineRecord(engineRecordId);
         dbHelper.generateResults(documentSnapshot);
     }
-    public void populateTableResults(List<EGTResult> egtResults)
-    {
+
+    public void populateTableResults(List<EGTResult> egtResults) {
 
         final TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayout_EGT_detail);
         final TableRow tableRow1 = new TableRow(this);
         tableRow1.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
         // Creation textView
+        final TextView textDesig1 = new TextView(this);
+        textDesig1.setText("Desig.      ");
+       // textDesig1.setWidth(20);
+
+
+
+        // Creation textView
         final TextView textThrusts1 = new TextView(this);
-        textThrusts1.setText("Thrust");
+        textThrusts1.setText("Thrust      ");
+       // textThrusts1.setWidth(20);
 
         // Creation textView
         final TextView textEGTMargin1 = new TextView(this);
-        textEGTMargin1.setText("EGT Margin");
+        textEGTMargin1.setText("EGT Margin      ");
+      //  textEGTMargin1.setWidth(20);
 
         // Creation textView
         final TextView textRemainingCycles1 = new TextView(this);
         textRemainingCycles1.setText("Remain.Cyc      ");
+      //  textRemainingCycles1.setWidth(20);
 
 
         // Creation textView
         final TextView textShopVisitYear1 = new TextView(this);
         textShopVisitYear1.setText("SV Yr");
+      //  textShopVisitYear1.setWidth(20);
 
+        tableRow1.addView(textDesig1);
         tableRow1.addView(textThrusts1);
         tableRow1.addView(textEGTMargin1);
         tableRow1.addView(textRemainingCycles1);
@@ -141,7 +155,7 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
         tableLayout.addView(tableRow1, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
 
-       //
+        //
         for (EGTResult egtResult : egtResults) {
 
             // Creation row
@@ -149,36 +163,45 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
             // Creation textView
+            final TextView textDesig = new TextView(this);
+            textDesig.setText(egtResult.getDesignation());
+         //   textDesig.setWidth(20);
+
+
+            // Creation textView
             final TextView textThrusts = new TextView(this);
-            textThrusts.setText(String.format("%2d",egtResult.getThrust()));
-           // textThrusts.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+            textThrusts.setText(String.format("%2d", egtResult.getThrust()));
+            // textThrusts.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
             //textThrusts.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            //textThrusts.setWidth(0);
+          //  textThrusts.setWidth(0);
 
             // Creation textView
             final TextView textEGTMargin = new TextView(this);
-            textEGTMargin.setText(String.format("%2d",egtResult.getEGTMargin()));
-          //  textEGTMargin.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-         //   textEGTMargin.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
-           // textEGTMargin.setWidth(0);
+            textEGTMargin.setText(String.format("%2d", egtResult.getEGTMargin()));
+            //  textEGTMargin.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+            //   textEGTMargin.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+         //    textEGTMargin.setWidth(0);
 
             // Creation textView
             Integer remainingCycles = egtResult.getRemainingCycles();
             final TextView textRemainingCycles = new TextView(this);
-            textRemainingCycles.setText(String.format(" %2d",egtResult.getRemainingCycles()));
+            textRemainingCycles.setText(String.format(" %2d", egtResult.getRemainingCycles()));
             textRemainingCycles.setText(remainingCycles.toString());
-           //   textRemainingCycles.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-          //    textRemainingCycles.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
-           // textRemainingCycles.setWidth(0);
+            //   textRemainingCycles.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+            //    textRemainingCycles.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+          //  textRemainingCycles.setWidth(0);
 
             // Creation textView
             final TextView textShopVisitYear = new TextView(this);
-            textShopVisitYear.setText(String.format(" %2d",egtResult.getShopVisitYear()));
-           // textShopVisitYear.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-           // textShopVisitYear.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
-           // textShopVisitYear.setWidth(0);
+            if (egtResult.getShopVisitYear() < Calendar.getInstance().get(Calendar.YEAR))
+                textShopVisitYear.setText("Now");
+            else
+                textShopVisitYear.setText(String.format(" %2d", egtResult.getShopVisitYear()));
+            // textShopVisitYear.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+            // textShopVisitYear.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+         //    textShopVisitYear.setWidth(0);
 
-            //tableRow.addView(textDesignation);
+            tableRow.addView(textDesig);
             tableRow.addView(textThrusts);
             tableRow.addView(textEGTMargin);
             tableRow.addView(textRemainingCycles);
@@ -190,7 +213,6 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
         }
 
     }
-
 
 
 }
