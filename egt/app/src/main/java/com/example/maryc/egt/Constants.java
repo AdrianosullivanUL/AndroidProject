@@ -27,6 +27,7 @@ public class Constants {
     public static final String COLLECTION_ENGINE_MODEL = "engine_model";
     public static final String COLLECTION_ENGINE_DESIGNATION = "engine_designation";
     public static final String COLLECTION_ENGINE = "engine";
+    public static final String KEY_RED_LINE_TEMPERATURE = "red_line_temperature";
 
 
 }

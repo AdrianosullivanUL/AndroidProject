@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +39,9 @@ public class DBHelper {
         this.db = db;
         this.context = context;
 
+       // Function to pre-populate the engine designations
+       // CreateDesignations();
     }
-
 
 
     public void populateEngineModels() {
@@ -83,7 +85,7 @@ public class DBHelper {
                                 engine.setEngineModel(document.get(Constants.KEY_ENGINE_MODEL).toString());
                                 mEngines.add(engine);
                             }
-                            MainActivity mainActivity = (MainActivity)context;
+                            MainActivity mainActivity = (MainActivity) context;
                             mainActivity.setESNAdaptor();
                         } else {
                             Log.d(Constants.TAG, "Error getting documents: ", task.getException());
@@ -122,10 +124,10 @@ public class DBHelper {
     public List<String> getEngineModels() {
         return mEngineModels;
     }
+
     public List<String> getESNs() {
         List<String> esns = new ArrayList<>();
-        for (Engine engine : mEngines)
-        {
+        for (Engine engine : mEngines) {
             esns.add(engine.getESN());
         }
         return esns;
@@ -141,8 +143,8 @@ public class DBHelper {
         }
         return mDesignations;
     }
-    public EngineDesignation getEngineDesignation(String engineModel, String engineDesignation)
-    {
+
+    public EngineDesignation getEngineDesignation(String engineModel, String engineDesignation) {
         EngineDesignation mEngineDesignation = null;
         for (EngineDesignation engineDesig : mEngineDesignations
                 ) {
@@ -168,7 +170,7 @@ public class DBHelper {
         mEngineRecord.put(Constants.KEY_HOURS_SINCE_LAST_SHOP_VISIT, engineRecord.getHoursSinceLastShopVisit());
         mEngineRecord.put(Constants.KEY_HOURS_SINCE_NEW, engineRecord.getHoursSinceNew());
         mEngineRecord.put(Constants.KEY_CYCLES_SINCE_NEW, engineRecord.getCyclesSinceNew());
-       // mEngineRecord.put(Constants.KEY_ESTIMATED_TIME_TO_SHOP_VISIT, engineRecord.getEstimatedTimeToShopVisit());
+        // mEngineRecord.put(Constants.KEY_ESTIMATED_TIME_TO_SHOP_VISIT, engineRecord.getEstimatedTimeToShopVisit());
         addEngineIfNotExists(engineRecord.getESN(), engineRecord.getEngineModel());
 
 // Add a new document with a generated ID
@@ -187,27 +189,28 @@ public class DBHelper {
                     }
                 });
     }
-    public void generateResults(DocumentSnapshot document)
-    {
-                                Log.d(Constants.TAG, document.getId() + " => " + document.getData());
-                                String engineDesignation = document.get(Constants.KEY_ENGINE_DESIGNATION).toString();
-                                String engineModel =  document.get(Constants.KEY_ENGINE_MODEL).toString();
+
+    public void generateResults(DocumentSnapshot document) {
+        Log.d(Constants.TAG, document.getId() + " => " + document.getData());
+        String engineDesignation = document.get(Constants.KEY_ENGINE_DESIGNATION).toString();
+        String engineModel = document.get(Constants.KEY_ENGINE_MODEL).toString();
         int cyclesSinceNew = Integer.parseInt(document.get(Constants.KEY_CYCLES_SINCE_NEW).toString());
         int currentEGT = 0;
         try {
-            String currentEGTString = document.get(Constants.KEY_CURRENT_EGT).toString() ;
-                    currentEGT = Integer.parseInt(currentEGTString);
-                    }
-        catch   (Exception ex)
-        {}
-        buildEGTResults(engineModel,engineDesignation, currentEGT, cyclesSinceNew);
+            String currentEGTString = document.get(Constants.KEY_CURRENT_EGT).toString();
+            float currentEGTFloat = Float.parseFloat((currentEGTString));
+            currentEGT = (int)currentEGTFloat;
+        } catch (Exception ex) {
+            String x = ex.getMessage();
+        }
+        buildEGTResults(engineModel, engineDesignation, currentEGT, cyclesSinceNew);
     }
 
-    private void buildEGTResults(String engineModel, String engineDesignation,
-                                         final int CurrentCycles, final int CurrentEGT) {
+    private void buildEGTResults(String engineModel, String engineDesignation,final int CurrentEGT, final int CurrentCycles ) {
         mEGTResult.clear();
         db.collection(Constants.COLLECTION_ENGINE_DESIGNATION)
                 .whereEqualTo(Constants.KEY_ENGINE_MODEL, engineModel)
+                //.orderBy(Constants.KEY_ENGINE_DESIGNATION)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -215,19 +218,22 @@ public class DBHelper {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(Constants.TAG, document.getId() + " => " + document.getData());
+                                String designation = document.get(Constants.KEY_ENGINE_DESIGNATION).toString();
                                 int cyclesPerDegree = Integer.parseInt(document.get(Constants.KEY_CYCLES_PER_DEGREE).toString());
                                 int redLineTemperature = Integer.parseInt(document.get(Constants.KEY_RED_LINE_TEMRERATURE).toString());
                                 int thrustInK = Integer.parseInt(document.get(Constants.KEY_THRUST_IN_K).toString());
                                 int averageCyclesPerYear = Integer.parseInt(document.get(Constants.KEY_AVERAGE_CYCLES_PER_YEAR).toString());
 
-                                int remainingCycles  = CurrentCycles ;
+                                int remainingCycles = CurrentCycles;
 
                                 int egtMargin = redLineTemperature - CurrentEGT;
-                                int shopVisitYear = egtMargin * cyclesPerDegree / averageCyclesPerYear;
-                                EGTResult egtResult = new EGTResult(thrustInK,remainingCycles,shopVisitYear,egtMargin);
+                                int shopVisitYear = Calendar.getInstance().get(Calendar.YEAR) + ((egtMargin * cyclesPerDegree) / averageCyclesPerYear);
+                                EGTResult egtResult = new EGTResult(designation, thrustInK, egtMargin, remainingCycles, shopVisitYear);
+
+
                                 mEGTResult.add(egtResult);
                             }
-                            EGTMarginDetailActivity egtMarginDetailActivity = (EGTMarginDetailActivity)context;
+                            EGTMarginDetailActivity egtMarginDetailActivity = (EGTMarginDetailActivity) context;
                             egtMarginDetailActivity.populateTableResults(mEGTResult);
 
 
@@ -246,10 +252,10 @@ public class DBHelper {
         engineRecord.setCurrentEGT(796);
         return engineRecord;
     }
-    private void addEngineIfNotExists(final String ESN, final String EngineModel)
-    {
+
+    private void addEngineIfNotExists(final String ESN, final String EngineModel) {
         db.collection("engine")
-                 .whereEqualTo("ESN", ESN)
+                .whereEqualTo("ESN", ESN)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -257,13 +263,12 @@ public class DBHelper {
                         boolean found = false;
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                              found = true;
+                                found = true;
                             }
-                            if (found == false)
-                            {
+                            if (found == false) {
                                 // Add this ESN to the list of engines
                                 Map<String, Object> mEngine = new HashMap<>();
-                                mEngine.put(Constants.KEY_ESN,ESN);
+                                mEngine.put(Constants.KEY_ESN, ESN);
                                 mEngine.put(Constants.KEY_ENGINE_MODEL, EngineModel);
 
                                 // Add a new document with a generated ID
@@ -291,4 +296,78 @@ public class DBHelper {
                 });
     }
 
+    private void CreateDesignations() {
+        addDesignation("CFM56-5B", "3/P", 26, 940, 1180, 2500);
+        addDesignation("CFM56-5B", "4/P", 21, 990, 1407, 2500);
+        addDesignation("CFM56-5B", "5/P", 26, 990, 1473, 2500);
+        addDesignation("CFM56-5B", "7/P", 21, 1040, 1471, 2500);
+        addDesignation("CFM56-5B", "8/P", 22, 1080, 2295, 2500);
+        addDesignation("CFM56-5B", "9/P", 20, 1140, 2300, 2500);
+        addDesignation("CFM56-7B", "20/3", 22, 1230, 1500, 2600);
+        addDesignation("CFM56-7B", "22/3", 23, 1030, 1349, 2600);
+        addDesignation("CFM56-7B", "24/3", 25, 1010, 1619, 2600);
+        addDesignation("CFM56-7B", "26/3", 26, 1000, 1276, 2600);
+        addDesignation("CFM56-7B", "27/3", 23, 1030, 806, 2600);
+        addDesignation("CFM56-7B", "24/3B1", 25, 1010, 600, 2600);
+        addDesignation("CFM56-7B", "26/3B1", 26, 1000, 1512, 2600);
+        addDesignation("CFM56-7B", "27/3B1", 23, 1030, 552, 2600);
+        addDesignation("CFM56-7B", "24/B1", 31, 950, 800, 2600);
+        addDesignation("LEAP-1A", "35A", 31, 1023, 1000, 2700);
+        addDesignation("LEAP-1A", "33B2", 23, 1103, 1200, 2700);
+        addDesignation("LEAP-1A", "24E1", 26, 1073, 1100, 2700);
+        addDesignation("LEAP-1A", "26E1", 23, 1103, 1300, 2700);
+        addDesignation("LEAP-1A", "24", 26, 1073, 1500, 2700);
+        addDesignation("LEAP-1A", "26", 23, 1103, 1574, 2700);
+        addDesignation("LEAP-1A", "23", 31, 1023, 1400, 2700);
+        addDesignation("LEAP-1A", "30", 31, 1033, 1500, 2700);
+        addDesignation("LEAP-1A", "32", 31, 1033, 1288, 2700);
+        addDesignation("LEAP-1A", "33", 28, 1063, 818, 2700);
+        addDesignation("LEAP-1B", "28/B1", 28, 1063, 1700, 2800);
+        addDesignation("LEAP-1B", "28/B2", 28, 1063, 1800, 2800);
+        addDesignation("LEAP-1B", "28/B3", 27, 1073, 1900, 2800);
+        addDesignation("LEAP-1B", "27", 22, 1123, 864, 2800);
+        addDesignation("LEAP-1B", "21", 23, 1113, 900, 2800);
+        addDesignation("LEAP-1B", "23", 26, 1083, 1000, 2800);
+        addDesignation("LEAP-1B", "25", 28, 1063, 535, 2800);
+        addDesignation("LEAP-1B", "28", 28, 1033, 928, 2800);
+
+    }
+
+    private void addDesignation(
+            String engine_model,
+            String engine_designation,
+            int thrust_in_k,
+            int red_line_temperature,
+            int average_cycles_per_year,
+            int cycles_per_degree
+    ) {
+        // Create a new user with a first and last name
+        Map<String, Object> mEngineDesignationRecord = new HashMap<>();
+        mEngineDesignationRecord.put(Constants.KEY_ENGINE_MODEL, engine_model);
+        mEngineDesignationRecord.put(Constants.KEY_ENGINE_DESIGNATION, engine_designation);
+        mEngineDesignationRecord.put(Constants.KEY_THRUST_IN_K, thrust_in_k);
+        mEngineDesignationRecord.put(Constants.KEY_AVERAGE_CYCLES_PER_YEAR, average_cycles_per_year);
+        mEngineDesignationRecord.put(Constants.KEY_CYCLES_PER_DEGREE, cycles_per_degree);
+        mEngineDesignationRecord.put(Constants.KEY_RED_LINE_TEMPERATURE, red_line_temperature);
+
+
+        db.collection("engine_designation")
+                .add(mEngineDesignationRecord)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(Constants.TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(Constants.TAG, "Error adding document", e);
+
+
+                    }
+                });
+
+
+    }
 }

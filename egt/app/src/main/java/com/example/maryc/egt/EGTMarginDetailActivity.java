@@ -111,41 +111,81 @@ public class EGTMarginDetailActivity extends AppCompatActivity {
     }
     public void populateTableResults(List<EGTResult> egtResults)
     {
+
         final TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayout_EGT_detail);
+        final TableRow tableRow1 = new TableRow(this);
+        tableRow1.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+
+        // Creation textView
+        final TextView textThrusts1 = new TextView(this);
+        textThrusts1.setText("Thrust");
+
+        // Creation textView
+        final TextView textEGTMargin1 = new TextView(this);
+        textEGTMargin1.setText("EGT Margin");
+
+        // Creation textView
+        final TextView textRemainingCycles1 = new TextView(this);
+        textRemainingCycles1.setText("Remain.Cyc      ");
+
+
+        // Creation textView
+        final TextView textShopVisitYear1 = new TextView(this);
+        textShopVisitYear1.setText("SV Yr");
+
+        tableRow1.addView(textThrusts1);
+        tableRow1.addView(textEGTMargin1);
+        tableRow1.addView(textRemainingCycles1);
+        tableRow1.addView(textShopVisitYear1);
+
+        tableLayout.addView(tableRow1, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+
+
        //
         for (EGTResult egtResult : egtResults) {
 
             // Creation row
             final TableRow tableRow = new TableRow(this);
-            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
             // Creation textView
             final TextView textThrusts = new TextView(this);
             textThrusts.setText(String.format("%2d",egtResult.getThrust()));
-            textThrusts.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+           // textThrusts.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+            //textThrusts.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            //textThrusts.setWidth(0);
 
             // Creation textView
             final TextView textEGTMargin = new TextView(this);
             textEGTMargin.setText(String.format("%2d",egtResult.getEGTMargin()));
-            textEGTMargin.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+          //  textEGTMargin.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+         //   textEGTMargin.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+           // textEGTMargin.setWidth(0);
 
             // Creation textView
+            Integer remainingCycles = egtResult.getRemainingCycles();
             final TextView textRemainingCycles = new TextView(this);
-            textRemainingCycles.setText(String.format("%2d",egtResult.getRemainingCycles()));
-            textRemainingCycles.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+            textRemainingCycles.setText(String.format(" %2d",egtResult.getRemainingCycles()));
+            textRemainingCycles.setText(remainingCycles.toString());
+           //   textRemainingCycles.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+          //    textRemainingCycles.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+           // textRemainingCycles.setWidth(0);
 
             // Creation textView
             final TextView textShopVisitYear = new TextView(this);
-            textShopVisitYear.setText(String.format("%2d",egtResult.getShopVisitYear()));
-            textShopVisitYear.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+            textShopVisitYear.setText(String.format(" %2d",egtResult.getShopVisitYear()));
+           // textShopVisitYear.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+           // textShopVisitYear.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+           // textShopVisitYear.setWidth(0);
 
-
+            //tableRow.addView(textDesignation);
             tableRow.addView(textThrusts);
             tableRow.addView(textEGTMargin);
             tableRow.addView(textRemainingCycles);
             tableRow.addView(textShopVisitYear);
 
-            tableLayout.addView(tableRow);
+            tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+
 
         }
 
